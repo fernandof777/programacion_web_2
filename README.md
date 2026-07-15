@@ -1,58 +1,219 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🔧 Plataforma Web para Taller Automotriz
+### Grupo Los Jausis — Universidad Privada Domingo Savio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Materia:** Programación Web II  
+> **Docente:** Melgar Zabala Paul Mauricio  
+> **Carrera:** Ingeniería en Sistemas
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👥 Integrantes
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| # | Nombre |
+|---|--------|
+| 1 | Luis Fernando Felipe Salvatierra Manaca |
+| 2 | Luis Fernando Hurtado |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📋 Descripción del Proyecto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Plataforma web para la gestión integral de servicios y clientes de talleres automotrices en Santa Cruz de la Sierra. El sistema contempla módulos de seguridad, administración, gestión comercial, mecánicos, repuestos, pagos y reportes.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🔗 Repositorio
 
-## Agentic Development
+[https://github.com/fernandof777/programacion_web_2](https://github.com/fernandof777/programacion_web_2)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
+
+## 🖼️ Wireframes & Mockups — Actividad 4
+
+> **Mínimo requerido:** 2 Wireframes + 2 Mockups por integrante  
+> **Total entregado:** 4 Wireframes + 4 Mockups
+
+---
+
+## 📐 WIREFRAMES
+
+Los wireframes representan la estructura y distribución de elementos en pantalla, sin colores ni estilos finales.
+
+---
+
+### Wireframe 1 — Seguridad: Login & Recuperación de Contraseña
+*Integrante: Luis Fernando Felipe Salvatierra Manaca*
+
+![Wireframe Login y Recuperación de Contraseña](public/img/wireframes/01_wireframe_login_recuperacion.png)
+
+**Pantallas incluidas:**
+- Formulario de inicio de sesión (email, contraseña, botón Iniciar Sesión)
+- Enlace de recuperación de contraseña
+- Formulario de recuperación (ingreso de email registrado)
+
+---
+
+### Wireframe 2 — Administración: Dashboard
+*Integrante: Luis Fernando Felipe Salvatierra Manaca*
+
+![Wireframe Dashboard Administración](public/img/wireframes/02_wireframe_dashboard.png)
+
+**Pantallas incluidas:**
+- Barra de navegación superior con logo y menú de usuario
+- Sidebar con menú completo del sistema
+- Tarjetas de métricas KPI (órdenes, clientes, mecánicos, ingresos)
+- Gráfico de barras de órdenes mensuales
+- Tabla de órdenes de trabajo recientes
+
+---
+
+### Wireframe 3 — Gestión Comercial: Clientes & Repuestos/Almacén
+*Integrante: Luis Fernando Hurtado*
+
+![Wireframe Clientes y Repuestos](public/img/wireframes/03_wireframe_clientes_repuestos.png)
+
+**Pantallas incluidas:**
+- Módulo Clientes: tabla con ID, Nombre, CI/NIT, Teléfono, Email, Acciones
+- Botón "Nuevo Cliente" y barra de búsqueda
+- Módulo Repuestos/Almacén: tabla de inventario con Código, Stock, Precio, Proveedor
+- Sección de alertas de stock mínimo
+
+---
+
+### Wireframe 4 — Reportes: Reparación & Diagnóstico
+*Integrante: Luis Fernando Hurtado*
+
+![Wireframe Reportes](public/img/wireframes/04_wireframe_reportes.png)
+
+**Pantallas incluidas:**
+- Filtros por rango de fechas y tipo de reporte
+- Tabla de Reporte de Reparación con órdenes, servicios y costos
+- Sección de Reporte de Diagnóstico con gráfico de torta y listado por categoría
+- Botones de exportación a PDF y Excel
+
+---
+
+## 🎨 MOCKUPS
+
+Los mockups representan el diseño visual final de la aplicación con colores, tipografía e interacciones reales.
+
+---
+
+### Mockup 1 — Seguridad: Pantalla de Login
+*Integrante: Luis Fernando Felipe Salvatierra Manaca*
+
+![Mockup Login](public/img/mockups/01_mockup_login.png)
+
+**Características de diseño:**
+- Tema oscuro con fondo azul marino profundo (#0F172A)
+- Tarjeta central con efecto glassmorphism
+- Campos de email y contraseña con iconos y validación visual
+- Botón "Iniciar Sesión" con gradiente azul-cyan
+- Enlace de recuperación de contraseña en azul claro
+- Indicadores de rol de acceso (Administrador, Mecánico, Cliente)
+
+---
+
+### Mockup 2 — Administración: Dashboard Principal
+*Integrante: Luis Fernando Felipe Salvatierra Manaca*
+
+![Mockup Dashboard](public/img/mockups/02_mockup_dashboard.png)
+
+**Características de diseño:**
+- Sidebar oscuro (#0F172A) con íconos de navegación
+- Ítem activo resaltado en azul
+- 4 tarjetas KPI con colores diferenciados (azul, verde, naranja, morado)
+- Gráfico de línea "Órdenes por Mes" en azul
+- Tabla de órdenes recientes con badges de estado coloreados
+- Diseño responsivo y profesional
+
+---
+
+### Mockup 3 — Administración: Gestión de Usuarios & Roles
+*Integrante: Luis Fernando Hurtado*
+
+![Mockup Usuarios y Roles](public/img/mockups/03_mockup_usuarios_roles.png)
+
+**Características de diseño:**
+- Tabla de usuarios con avatar, nombre, email y rol
+- Badges de rol con colores: Administrador (azul), Mecánico (naranja), Cliente (verde), Recepcionista (morado)
+- Toggle de estado Activo/Inactivo
+- Botones de acción (editar, eliminar) por fila
+- Barra de búsqueda y filtros avanzados
+
+---
+
+### Mockup 4 — Gestión Comercial: Clientes
+*Integrante: Luis Fernando Hurtado*
+
+![Mockup Clientes](public/img/mockups/04_mockup_clientes.png)
+
+**Características de diseño:**
+- Grid de tarjetas de clientes con avatar circular e iniciales
+- Datos del cliente: nombre, CI/NIT, teléfono, email, vehículos asociados
+- Botones de acción: "Ver Historial" y "Editar"
+- Modal de formulario "Nuevo Cliente" con campos validados
+- Buscador y filtro por ciudad
+
+---
+
+## 🏗️ Tecnologías Utilizadas
+
+- **Framework:** Laravel 13
+- **Base de datos:** SQLite
+- **Frontend:** Blade Templates + Tailwind CSS v4 + Vite
+- **Control de versiones:** Git + GitHub
+
+---
+
+## ⚙️ Instalación Local
 
 ```bash
-composer require laravel/boost --dev
+# Clonar el repositorio
+git clone https://github.com/fernandof777/programacion_web_2.git
+cd programacion_web_2
 
-php artisan boost:install
+# Instalar dependencias PHP
+composer install
+
+# Configurar variables de entorno
+cp .env.example .env
+php artisan key:generate
+
+# Crear base de datos y ejecutar migraciones
+php artisan migrate
+
+# Instalar dependencias JS y compilar assets
+npm install
+npm run build
+
+# Iniciar servidor de desarrollo
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 📁 Estructura del Proyecto
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+Proyecto/
+├── app/
+│   ├── Http/Controllers/
+│   ├── Models/
+│   └── Providers/
+├── database/
+│   └── migrations/
+├── public/
+│   └── img/
+│       ├── wireframes/       ← Wireframes de la Actividad 4
+│       └── mockups/          ← Mockups de la Actividad 4
+├── resources/
+│   └── views/
+│       └── welcome.blade.php
+└── routes/
+    └── web.php
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*Universidad Privada Domingo Savio — Santa Cruz de la Sierra, Bolivia*
