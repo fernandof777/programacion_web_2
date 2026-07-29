@@ -1,0 +1,10 @@
+@extends('layouts.app')
+@section('titulo','Clientes') @section('encabezado','Clientes') @section('subtitulo','Información comercial y vehículos asociados')
+@section('contenido')
+<div class="d-flex justify-content-between align-items-center mb-4"><div><h2 class="fw-bold mb-1">Clientes</h2><p class="text-secondary mb-0">Administra la cartera del taller.</p></div><a href="{{ route('clientes.create') }}" class="btn btn-primary"><i class="bi bi-person-plus me-1"></i>Nuevo cliente</a></div>
+<div class="card app-card mb-4"><div class="card-body"><form class="d-flex gap-2"><input class="form-control" name="buscar" value="{{ request('buscar') }}" placeholder="Buscar por nombre o CI/NIT"><button class="btn btn-primary">Buscar</button></form></div></div>
+<div class="card app-card"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="table-light"><tr><th>Cliente</th><th>CI/NIT</th><th>Contacto</th><th>Ciudad</th><th>Vehículos</th><th>Órdenes</th><th>Estado</th><th></th></tr></thead><tbody>
+@forelse($clientes as $cliente)<tr><td class="fw-semibold">{{ $cliente->nombre }}</td><td>{{ $cliente->ci_nit }}</td><td>{{ $cliente->telefono }}<br><small class="text-secondary">{{ $cliente->email ?: 'Sin correo' }}</small></td><td>{{ $cliente->ciudad }}</td><td>{{ $cliente->vehiculos_count }}</td><td>{{ $cliente->ordenes_count }}</td><td><span class="badge text-bg-{{ $cliente->activo?'success':'secondary' }}">{{ $cliente->activo?'Activo':'Inactivo' }}</span></td><td class="text-end text-nowrap"><a class="btn btn-sm btn-outline-primary" href="{{ route('clientes.edit',$cliente) }}"><i class="bi bi-pencil"></i></a> <form class="d-inline" method="POST" action="{{ route('clientes.destroy',$cliente) }}" data-confirm="¿Eliminar este cliente?">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr>
+@empty<tr><td colspan="8" class="text-center py-5 text-secondary">No hay clientes registrados.</td></tr>@endforelse
+</tbody></table></div>@if($clientes->hasPages())<div class="card-footer bg-white">{{ $clientes->links() }}</div>@endif</div>
+@endsection

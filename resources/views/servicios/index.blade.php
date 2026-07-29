@@ -87,7 +87,7 @@
                         @endcan
                         @can('delete', $servicio)
                             <form method="POST" action="{{ route('servicios.destroy', $servicio) }}" class="d-inline"
-                                  onsubmit="return confirm('¿Seguro que deseas eliminar este servicio? Esta acción no se puede deshacer.')">
+                                  data-confirm="¿Seguro que deseas eliminar este servicio? Esta acción no se puede deshacer.">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger" type="submit" title="Eliminar">

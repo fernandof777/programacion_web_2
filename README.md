@@ -15,10 +15,15 @@ wireframes y mockups elaborados para el proyecto académico.
 - Validaciones reutilizables con mensajes en español.
 - Navegación responsiva preparada para módulos futuros.
 - Wireframes y mockups disponibles en `public/img`.
+- Gestión completa de clientes y sus datos de contacto.
+- Registro de vehículos vinculados con sus propietarios.
+- Órdenes de trabajo con recepción, diagnóstico, estados, fechas y total.
+- Inventario de repuestos con alertas automáticas de stock mínimo.
+- Reportes operativos y financieros filtrados por periodo.
+- Mapa interactivo con la ubicación exacta del taller y acceso a indicaciones.
 
-Los módulos de clientes, vehículos, órdenes de trabajo, repuestos, pagos,
-roles y reportes se incorporarán progresivamente. Las opciones todavía no
-implementadas aparecen deshabilitadas en la navegación.
+Los módulos de roles, permisos avanzados y pagos se incorporarán
+progresivamente.
 
 ## Requisitos
 
@@ -62,10 +67,27 @@ publicación real.
 php artisan test
 ```
 
-Las pruebas cubren autenticación, protección de rutas, validación de servicios,
-asignación segura del propietario y autorización para actualizar o eliminar.
+Las pruebas cubren autenticación, protección de rutas, servicios, clientes,
+vehículos, órdenes, consistencia de propietarios, inventario y reportes.
+
+## Seguridad implementada
+
+- Contraseñas con hashing seguro de Laravel.
+- Bloqueo temporal después de cinco intentos de acceso fallidos.
+- Límites de solicitudes globales y específicos para login y reportes.
+- Cookies de sesión `HttpOnly`, cifradas y seguras en producción.
+- Protección CSRF en formularios y consultas parametrizadas mediante Eloquent.
+- Roles de administrador, recepción y almacén comprobados en el servidor.
+- Cuentas desactivadas expulsadas automáticamente.
+- Cabeceras CSP, anti-clickjacking, `nosniff`, Referrer Policy y Permissions Policy.
+- HSTS cuando la petición utiliza HTTPS.
+- Auditoría de creaciones, modificaciones y eliminaciones sin guardar contraseñas.
+- Configuración segura de despliegue en `.env.production.example`.
+
+Para producción se debe usar un servidor administrado con HTTPS, firewall y
+protección DDoS/WAF como Cloudflare. XAMPP es exclusivamente para desarrollo.
 
 ## Próxima etapa sugerida
 
-Implementar roles y permisos, y después el módulo de clientes y vehículos. Así
-se podrá construir posteriormente el flujo completo de órdenes de trabajo.
+Implementar roles y permisos, asignación de mecánicos, consumo de repuestos por
+orden y registro de pagos.

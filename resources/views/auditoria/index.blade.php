@@ -1,0 +1,9 @@
+@extends('layouts.app')
+@section('titulo','Auditoría') @section('encabezado','Auditoría de seguridad') @section('subtitulo','Historial protegido de cambios')
+@section('contenido')
+<div class="mb-4"><h2 class="fw-bold mb-1">Registro de actividad</h2><p class="text-secondary mb-0">Creaciones, modificaciones y eliminaciones realizadas en el sistema.</p></div>
+<div class="card app-card mb-4"><div class="card-body"><form class="row g-2"><div class="col-md-7"><input class="form-control" name="buscar" value="{{ request('buscar') }}" placeholder="Buscar tipo de registro"></div><div class="col-md-3"><select class="form-select" name="evento"><option value="">Todos los eventos</option>@foreach(['created'=>'Creación','updated'=>'Actualización','deleted'=>'Eliminación'] as $v=>$n)<option value="{{ $v }}" @selected(request('evento')===$v)>{{ $n }}</option>@endforeach</select></div><div class="col-md-2"><button class="btn btn-primary w-100">Filtrar</button></div></form></div></div>
+<div class="card app-card"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="table-light"><tr><th>Fecha</th><th>Usuario</th><th>Evento</th><th>Entidad</th><th>ID</th><th>IP</th></tr></thead><tbody>
+@forelse($registros as $registro)<tr><td>{{ $registro->created_at->format('d/m/Y H:i:s') }}</td><td>{{ $registro->user?->name ?? 'Sistema' }}</td><td><span class="badge text-bg-{{ $registro->event==='deleted'?'danger':($registro->event==='updated'?'warning':'success') }}">{{ $registro->event }}</span></td><td>{{ class_basename($registro->auditable_type) }}</td><td>{{ $registro->auditable_id }}</td><td><code>{{ $registro->ip_address ?: '—' }}</code></td></tr>
+@empty<tr><td colspan="6" class="text-center py-5 text-secondary">No existen eventos registrados.</td></tr>@endforelse</tbody></table></div>@if($registros->hasPages())<div class="card-footer bg-white">{{ $registros->links() }}</div>@endif</div>
+@endsection

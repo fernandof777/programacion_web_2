@@ -29,7 +29,9 @@
         .app-card { border: 0; border-radius: 14px; box-shadow: 0 2px 12px rgba(15,23,42,.06); }
         .btn-primary { background: var(--blue); border-color: var(--blue); }
         .table > :not(caption) > * > * { padding: .9rem 1rem; vertical-align: middle; }
-        @media (max-width: 850px) {
+        .table-responsive { border-radius: inherit; }
+        img, canvas, iframe { max-width: 100%; }
+        @media (max-width: 1050px) {
             .sidebar { width: 76px; padding-inline: 10px; }
             .brand span:last-child, .side-link span, .nav-label { display: none; }
             .brand { padding-inline: 8px; }
@@ -37,6 +39,34 @@
             .main { margin-left: 76px; width: calc(100% - 76px); }
             .topbar, .page-content { padding-inline: 18px; }
             .user-name { display: none; }
+        }
+        @media (max-width: 600px) {
+            body { padding-bottom: 72px; }
+            .app-shell { display: block; }
+            .sidebar {
+                width: 100%; height: 68px; padding: 6px 8px; inset: auto 0 0 0;
+                z-index: 1050; display: flex; align-items: center; gap: 2px;
+                overflow-x: auto; overflow-y: hidden; box-shadow: 0 -4px 16px rgba(15,23,42,.2);
+            }
+            .sidebar .brand, .sidebar .nav-label { display: none; }
+            .side-link {
+                min-width: 62px; height: 54px; margin: 0; padding: 7px 5px;
+                flex: 1 0 62px; flex-direction: column; justify-content: center;
+                gap: 2px; font-size: 1.05rem; border-radius: 9px;
+            }
+            .side-link span { display: block; font-size: .62rem; white-space: nowrap; }
+            .side-link.active { box-shadow: inset 0 -3px var(--blue); }
+            .main { margin-left: 0; width: 100%; min-height: calc(100vh - 68px); }
+            .topbar { height: 64px; padding: 0 14px; }
+            .topbar small { display: none; }
+            .topbar .avatar { width: 34px; height: 34px; }
+            .page-content { padding: 18px 14px; }
+            .page-content > .d-flex { align-items: stretch !important; }
+            .page-content h2 { font-size: 1.45rem; }
+            .app-card { border-radius: 11px; }
+            .card-body { padding: 1rem; }
+            .table-responsive .table { min-width: 720px; }
+            .alert { font-size: .9rem; }
         }
     </style>
     @stack('estilos')
@@ -56,12 +86,20 @@
         <a class="side-link {{ request()->routeIs('servicios.*') ? 'active' : '' }}" href="{{ route('servicios.index') }}">
             <i class="bi bi-tools"></i><span>Servicios</span>
         </a>
-        <div class="nav-label">PRÓXIMAMENTE</div>
-        <span class="side-link opacity-50"><i class="bi bi-people"></i><span>Clientes</span></span>
-        <span class="side-link opacity-50"><i class="bi bi-car-front"></i><span>Vehículos</span></span>
-        <span class="side-link opacity-50"><i class="bi bi-clipboard2-check"></i><span>Órdenes</span></span>
-        <span class="side-link opacity-50"><i class="bi bi-box-seam"></i><span>Repuestos</span></span>
-        <span class="side-link opacity-50"><i class="bi bi-bar-chart"></i><span>Reportes</span></span>
+        <div class="nav-label">GESTIÓN</div>
+        @if(Auth::user()->hasRole('admin','recepcionista'))
+        <a class="side-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}" href="{{ route('clientes.index') }}"><i class="bi bi-people"></i><span>Clientes</span></a>
+        <a class="side-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}" href="{{ route('vehiculos.index') }}"><i class="bi bi-car-front"></i><span>Vehículos</span></a>
+        <a class="side-link {{ request()->routeIs('ordenes.*') ? 'active' : '' }}" href="{{ route('ordenes.index') }}"><i class="bi bi-clipboard2-check"></i><span>Órdenes</span></a>
+        @endif
+        @if(Auth::user()->hasRole('admin','almacen'))
+        <a class="side-link {{ request()->routeIs('repuestos.*') ? 'active' : '' }}" href="{{ route('repuestos.index') }}"><i class="bi bi-box-seam"></i><span>Repuestos</span></a>
+        @endif
+        @if(Auth::user()->hasRole('admin'))
+        <a class="side-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}" href="{{ route('reportes.index') }}"><i class="bi bi-bar-chart"></i><span>Reportes</span></a>
+        <a class="side-link {{ request()->routeIs('auditoria.*') ? 'active' : '' }}" href="{{ route('auditoria.index') }}"><i class="bi bi-shield-check"></i><span>Auditoría</span></a>
+        @endif
+        <a class="side-link {{ request()->routeIs('ubicacion.*') ? 'active' : '' }}" href="{{ route('ubicacion.index') }}"><i class="bi bi-geo-alt"></i><span>Ubicación</span></a>
     </aside>
     <main class="main">
         <header class="topbar">
@@ -71,7 +109,7 @@
             </div>
             <div class="d-flex align-items-center gap-3">
                 <div class="avatar">{{ mb_strtoupper(mb_substr(Auth::user()->name, 0, 1)) }}</div>
-                <span class="user-name fw-semibold">{{ Auth::user()->name }}</span>
+                <span class="user-name"><span class="fw-semibold d-block">{{ Auth::user()->name }}</span><small class="text-secondary text-capitalize">{{ Auth::user()->role }}</small></span>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button class="btn btn-light btn-sm" type="submit" title="Cerrar sesión">
@@ -80,12 +118,24 @@
                 </form>
             </div>
         </header>
-        <div class="page-content">@yield('contenido')</div>
+        <div class="page-content">
+            @if (session('success'))<div class="alert alert-success alert-dismissible fade show"><i class="bi bi-check-circle me-1"></i>{{ session('success') }}<button class="btn-close" data-bs-dismiss="alert"></button></div>@endif
+            @if (session('error'))<div class="alert alert-danger alert-dismissible fade show"><i class="bi bi-exclamation-triangle me-1"></i>{{ session('error') }}<button class="btn-close" data-bs-dismiss="alert"></button></div>@endif
+            @yield('contenido')
+        </div>
     </main>
 </div>
 @else
     @yield('contenido')
 @endauth
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@stack('scripts')
+<script nonce="{{ $cspNonce }}">
+document.addEventListener('submit', (event) => {
+    const message = event.target.dataset.confirm;
+    if (message && !window.confirm(message)) event.preventDefault();
+});
+document.getElementById('print-page')?.addEventListener('click', () => window.print());
+</script>
 </body>
 </html>

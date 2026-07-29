@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\OrdenTrabajo;
+use App\Models\Repuesto;
 use App\Models\Servicio;
-use App\Models\User;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -12,12 +14,12 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'metricas' => [
-                'servicios' => Servicio::count(),
-                'servicios_activos' => Servicio::where('estado', 'Activo')->count(),
-                'usuarios' => User::count(),
-                'valor_catalogo' => Servicio::sum('precio'),
+                'servicios' => Servicio::where('estado', 'Activo')->count(),
+                'ordenes_pendientes' => OrdenTrabajo::whereNotIn('estado', ['Entregada', 'Cancelada'])->count(),
+                'clientes' => Cliente::where('activo', true)->count(),
+                'stock_bajo' => Repuesto::whereColumn('stock', '<=', 'stock_minimo')->count(),
             ],
-            'serviciosRecientes' => Servicio::with('user')->latest()->take(5)->get(),
+            'ordenesRecientes' => OrdenTrabajo::with(['cliente', 'vehiculo'])->latest()->take(5)->get(),
         ]);
     }
 }
