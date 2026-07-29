@@ -2,46 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreServicioRequest;
+use App\Http\Requests\UpdateServicioRequest;
 use App\Models\Servicio;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class ServicioController extends Controller
 {
-    /**
-     * Mostrar el listado de servicios con su usuario propietario.
-     */
-    public function index()
+    public function index(Request $request): View
     {
-        $servicios = Servicio::with('user')->latest()->get();
+        $filtros = $request->validate([
+            'buscar' => ['nullable', 'string', 'max:100'],
+            'estado' => ['nullable', 'in:Activo,Inactivo,En espera'],
+        ]);
+
+        $servicios = Servicio::query()
+            ->with('user')
+            ->when($filtros['buscar'] ?? null, function ($query, string $buscar): void {
+                $query->where(function ($subquery) use ($buscar): void {
+                    $subquery
+                        ->where('nombre', 'like', "%{$buscar}%")
+                        ->orWhere('descripcion', 'like', "%{$buscar}%");
+                });
+            })
+            ->when($filtros['estado'] ?? null, fn ($query, string $estado) => $query->where('estado', $estado))
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('servicios.index', compact('servicios'));
     }
 
-    /**
-     * Mostrar el formulario para crear un nuevo servicio.
-     */
-    public function create()
+    public function create(): View
     {
         return view('servicios.create');
     }
 
-    /**
-     * Almacenar un nuevo servicio en la base de datos.
-     */
-    public function store(Request $request)
+    public function store(StoreServicioRequest $request): RedirectResponse
     {
-        $datos = $request->validate([
-            'nombre' => ['required', 'max:100'],
-            'descripcion' => ['nullable'],
-            'precio' => ['required', 'numeric', 'min:0'],
-            'duracion_estimada' => ['required', 'integer', 'min:1'],
-            'estado' => ['required', 'max:30'],
-        ]);
+        $request->user()->servicios()->create($request->validated());
 
-        $datos['user_id'] = auth()->id();
+        return redirect()->route('servicios.index')
+            ->with('success', 'Servicio registrado exitosamente.');
+    }
 
-        Servicio::create($datos);
+    public function edit(Servicio $servicio): View
+    {
+        Gate::authorize('update', $servicio);
 
-        return redirect()->route('servicios.index')->with('success', 'Servicio registrado exitosamente.');
+        return view('servicios.edit', compact('servicio'));
+    }
+
+    public function update(UpdateServicioRequest $request, Servicio $servicio): RedirectResponse
+    {
+        $servicio->update($request->validated());
+
+        return redirect()->route('servicios.index')
+            ->with('success', 'Servicio actualizado exitosamente.');
+    }
+
+    public function destroy(Servicio $servicio): RedirectResponse
+    {
+        Gate::authorize('delete', $servicio);
+        $servicio->delete();
+
+        return redirect()->route('servicios.index')
+            ->with('success', 'Servicio eliminado correctamente.');
     }
 }

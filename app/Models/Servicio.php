@@ -13,12 +13,16 @@ class Servicio extends Model
         'precio',
         'duracion_estimada',
         'estado',
-        'user_id',
     ];
 
-    /**
-     * Obtener el usuario que registró el servicio.
-     */
+    protected function casts(): array
+    {
+        return [
+            'precio' => 'decimal:2',
+            'duracion_estimada' => 'integer',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

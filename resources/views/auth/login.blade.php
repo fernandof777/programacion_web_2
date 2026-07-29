@@ -1,53 +1,33 @@
 @extends('layouts.app')
 
-@section('titulo', 'Iniciar Sesión')
+@section('titulo', 'Iniciar sesión')
 
 @section('contenido')
-<div class="row justify-content-center mt-5">
-    <div class="col-md-5">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <div class="text-center mb-4">
-                    <i class="bi bi-wrench-adjustable-circle text-primary" style="font-size: 3rem;"></i>
-                    <h3 class="mt-2">Taller Automotriz</h3>
-                    <p class="text-muted">Inicie sesión para continuar</p>
+<div class="min-vh-100 d-flex align-items-center justify-content-center p-3" style="background: radial-gradient(circle at 20% 20%, #1e3a8a 0, #0f172a 40%, #020617 100%);">
+    <div class="card border-0 shadow-lg text-white" style="width: 100%; max-width: 440px; border-radius: 20px; background: rgba(15,23,42,.88); backdrop-filter: blur(14px);">
+        <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="brand-mark mx-auto mb-3"><i class="bi bi-wrench-adjustable"></i></div>
+                <h2 class="fw-bold">TallerPro</h2>
+                <p class="text-white-50">Gestión inteligente para tu taller</p>
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
+            @endif
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input class="form-control form-control-lg bg-dark text-white border-secondary" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus placeholder="nombre@taller.com">
                 </div>
-
-                @if ($errors->has('email'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror"
-                               id="email" name="email" value="{{ old('email') }}"
-                               required autofocus placeholder="correo@ejemplo.com">
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               id="password" name="password"
-                               required placeholder="Ingrese su contraseña">
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-                        </button>
-                    </div>
-                </form>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input class="form-control form-control-lg bg-dark text-white border-secondary" id="password" name="password" type="password" required placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary btn-lg w-100" type="submit">Iniciar sesión <i class="bi bi-arrow-right ms-2"></i></button>
+            </form>
+            <div class="border-top border-secondary mt-4 pt-3 text-center text-white-50 small">
+                Usuario inicial: luis@taller.com / password123
             </div>
         </div>
     </div>
