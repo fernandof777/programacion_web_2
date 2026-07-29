@@ -1,0 +1,9 @@
+@extends('layouts.app')
+@section('titulo','Vehículos') @section('encabezado','Vehículos') @section('subtitulo','Flota registrada por cliente')
+@section('contenido')
+<div class="d-flex justify-content-between mb-4"><h2 class="fw-bold">Vehículos</h2><a class="btn btn-primary" href="{{ route('vehiculos.create') }}"><i class="bi bi-plus-lg"></i> Nuevo vehículo</a></div>
+<div class="card app-card mb-4"><div class="card-body"><form class="d-flex gap-2"><input class="form-control" name="buscar" value="{{ request('buscar') }}" placeholder="Buscar placa, marca o modelo"><button class="btn btn-primary">Buscar</button></form></div></div>
+<div class="card app-card"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="table-light"><tr><th>Placa</th><th>Vehículo</th><th>Propietario</th><th>Año</th><th>Kilometraje</th><th></th></tr></thead><tbody>
+@forelse($vehiculos as $v)<tr><td><span class="badge text-bg-dark fs-6">{{ $v->placa }}</span></td><td class="fw-semibold">{{ $v->marca }} {{ $v->modelo }}<br><small class="text-secondary">{{ $v->color }}</small></td><td>{{ $v->cliente->nombre }}</td><td>{{ $v->anio }}</td><td>{{ number_format($v->kilometraje) }} km</td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ route('vehiculos.edit',$v) }}"><i class="bi bi-pencil"></i></a> <form class="d-inline" method="POST" action="{{ route('vehiculos.destroy',$v) }}" data-confirm="¿Eliminar este vehículo?">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr>
+@empty<tr><td colspan="6" class="text-center py-5 text-secondary">No hay vehículos registrados.</td></tr>@endforelse</tbody></table></div>@if($vehiculos->hasPages())<div class="card-footer bg-white">{{ $vehiculos->links() }}</div>@endif</div>
+@endsection
